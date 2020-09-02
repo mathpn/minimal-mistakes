@@ -1,0 +1,567 @@
+---
+title: "Exploratory data analysis: the WHO suicide dataset"
+header:
+  overlay_image: /assets/images/default_overlay.jpg
+  show_overlay_excerpt: false
+  categories:
+    - Data Analysis
+  tags:
+    - R
+    - ggplot2
+    - Data visualization
+excerpt: 'Exploratory data analysis is essential to construct hypothesis and derive conclusions from data. Today we’ll explore the WHO Suicide Statistics database (version from Kaggle). It consists of a single CSV table, with 43776 instances of merely 6 variables.'
+---
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="/assets/who-suicide/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/assets/who-suicide/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="/assets/who-suicide/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="/assets/who-suicide/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="/assets/who-suicide/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="/assets/who-suicide/navigation-1.1/tabsets.js"></script>
+<link href="/assets/who-suicide/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="/assets/who-suicide/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="the-data" class="section level2">
+<h2>The Data</h2>
+<p><a href="https://en.wikipedia.org/wiki/Exploratory_data_analysis">Exploratory data analysis</a> is essential to construct hypothesis and derive conclusions from data. Today we’ll explore the <a href="https://www.kaggle.com/szamil/who-suicide-statistics">WHO Suicide Statistics</a> database (version from Kaggle). It consists of a single CSV table, with 43776 instances of merely 6 variables. This analysis was done using <a href="https://www.r-project.org/">R</a> and <a href="https://rmarkdown.rstudio.com/">RMarkdown</a>.</p>
+<pre class="r"><code>summary(who_suicide_statistics)</code></pre>
+<pre><code>##         country           year          sex                 age
+##  Austria    :  456   Min.   :1979   female:21888   15-24 years:7296
+##  Hungary    :  456   1st Qu.:1990   male  :21888   25-34 years:7296
+##  Iceland    :  456   Median :1999                  35-54 years:7296
+##  Israel     :  456   Mean   :1999                  5-14 years :7296
+##  Mauritius  :  456   3rd Qu.:2007                  55-74 years:7296
+##  Netherlands:  456   Max.   :2016                  75+ years  :7296
+##  (Other)    :41040
+##   suicides_no        population
+##  Min.   :    0.0   Min.   :     259
+##  1st Qu.:    1.0   1st Qu.:   85113
+##  Median :   14.0   Median :  380655
+##  Mean   :  193.3   Mean   : 1664091
+##  3rd Qu.:   91.0   3rd Qu.: 1305698
+##  Max.   :22338.0   Max.   :43805214
+##  NA&#39;s   :2256      NA&#39;s   :5460</code></pre>
+<p>Clearly, we have a considerable amount of missing values, with data since 1979 to 2016, which is still quite recent. The sex and country variables must be converted to categorical ones:</p>
+<pre class="r"><code>who_suicide_statistics$sex &lt;- as.factor(who_suicide_statistics$sex)
+who_suicide_statistics$country &lt;- as.factor(who_suicide_statistics$country)</code></pre>
+<p>Next, the age variable should be an ordered factor:</p>
+<pre class="r"><code>who_suicide_statistics$age &lt;- factor(who_suicide_statistics$age, levels = c(&quot;5-14 years&quot;, &quot;15-24 years&quot;, &quot;25-34 years&quot;, &quot;55-74 years&quot;, &quot;75+ years&quot;))</code></pre>
+<p>Let’s take a look at our most important variable – suicide number:</p>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-4-1.png" /><!-- --></p>
+<p>Clearly, the distribution is extremely skewed and zero-inflated, ranging from 0 to very high values. Let’s create a proportional suicide number variable <strong>(suicide_rate)</strong>, defined by prop_suicide = suicides_no/population * 1000000 <strong>(per million people)</strong> and see its distribution:</p>
+<pre class="r"><code>total_suicide_rate &lt;- who_suicide_statistics %&gt;% group_by(year, country) %&gt;% summarise(rate_suicide = sum(suicides_no) * 1000000 / sum(population)) %&gt;% na.omit
+hist(total_suicide_rate$rate_suicide, xlab = &quot;Suicide rate&quot;, main = NA)</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-5-1.png" /><!-- --></p>
+<p>Much less variance, but still a very broad range. Let’s summarise and plot some graphs to see the relationships between variables.</p>
+<pre class="r"><code>library(ggplot2, dplyr)
+
+total_suicide &lt;- who_suicide_statistics %&gt;% group_by(year, country) %&gt;% summarise(total_suicide = sum(suicides_no, na.rm = T))</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-7-1.png" /><!-- --><img src="/assets/who-suicide/figure-html/unnamed-chunk-7-2.png" /><!-- --> <img src="/assets/who-suicide/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
+<p>Men have higher suicide rates overall Let’s see which countries have the most and least suicides:</p>
+<p><strong>Top 10 countries and correspondent years with highest suicide rates</strong></p>
+<pre><code>## # A tibble: 10 x 3
+## # Groups:   year [10]
+##     year country   rate_suicide
+##    &lt;int&gt; &lt;fct&gt;            &lt;dbl&gt;
+##  1  1996 Lithuania         510.
+##  2  1995 Lithuania         500.
+##  3  1994 Lithuania         500.
+##  4  1983 Hungary           492.
+##  5  2000 Lithuania         492.
+##  6  1981 Hungary           492.
+##  7  1984 Hungary           491.
+##  8  1980 Hungary           486.
+##  9  1997 Lithuania         485.
+## 10  1979 Hungary           485.</code></pre>
+<p><strong>Top 10 countries and correspondent years with lowest positive suicide rates</strong></p>
+<pre><code>## # A tibble: 10 x 3
+## # Groups:   year [10]
+##     year country rate_suicide
+##    &lt;int&gt; &lt;fct&gt;          &lt;dbl&gt;
+##  1  1980 Egypt          0.404
+##  2  2004 Jamaica        0.406
+##  3  1991 Jamaica        0.464
+##  4  1986 Jamaica        0.487
+##  5  2007 Egypt          0.493
+##  6  1987 Egypt          0.494
+##  7  1982 Jamaica        0.514
+##  8  2002 Egypt          0.562
+##  9  2015 Egypt          0.608
+## 10  2008 Egypt          0.611</code></pre>
+<p>Now let’s take an average over the last five years of data and see again the highs and lows:</p>
+<p><strong>Top 20 countries with highest suicide rates (2012-2016 average)</strong></p>
+<pre><code>## # A tibble: 20 x 2
+##    country             rate_suicide
+##    &lt;fct&gt;                      &lt;dbl&gt;
+##  1 Lithuania                   335.
+##  2 Guyana                      305.
+##  3 Republic of Korea           289.
+##  4 Suriname                    265.
+##  5 Slovenia                    217.
+##  6 Hungary                     212.
+##  7 Latvia                      210.
+##  8 Kazakhstan                  208.
+##  9 Japan                       207.
+## 10 Belarus                     204.
+## 11 Russian Federation          204.
+## 12 Ukraine                     199.
+## 13 Uruguay                     187.
+## 14 Belgium                     182.
+## 15 Croatia                     180.
+## 16 Estonia                     179.
+## 17 Serbia                      170.
+## 18 Republic of Moldova         168.
+## 19 Mongolia                    167.
+## 20 Poland                      166.</code></pre>
+<p><strong>Top 20 countries with lowest positive suicide rates (2012-2016 average)</strong></p>
+<pre><code>## # A tibble: 20 x 2
+##    country                            rate_suicide
+##    &lt;fct&gt;                                     &lt;dbl&gt;
+##  1 Egypt                                      1.60
+##  2 Oman                                       1.93
+##  3 Antigua and Barbuda                        2.72
+##  4 Grenada                                    4.19
+##  5 Bahrain                                    9.11
+##  6 Mayotte                                   10.5
+##  7 South Africa                              11.0
+##  8 Bahamas                                   14.4
+##  9 Kuwait                                    15.3
+## 10 Brunei Darussalam                         16.0
+## 11 Turkey                                    22.8
+## 12 Qatar                                     24.0
+## 13 Armenia                                   24.6
+## 14 Venezuela (Bolivarian Republic of)        24.9
+## 15 Turkmenistan                              26.5
+## 16 Iran (Islamic Rep of)                     34.0
+## 17 Guatemala                                 34.1
+## 18 Saint Vincent and Grenadines              37.4
+## 19 Panama                                    37.5
+## 20 Fiji                                      40.9</code></pre>
+<p>Let’s see if there’s any relationship between suicide rates (2012-2016) and <a href="https://dataspace.princeton.edu/jspui/bitstream/88435/dsp017p88ck01w/1/EIU-Democracy-Index-2015.pdf">Democracy Index</a> (2015) calculated by The Economist group. The democracy index data was manually curated to correspond to country names present in the WHO dataset.</p>
+<pre class="r"><code>democracy &lt;- read.csv(file = &quot;democracy_index_2015.csv&quot;)
+
+democracy_compare_data &lt;- total_suicide_rate %&gt;% filter(year &gt;= 2012) %&gt;% filter(country %in% as.character(unique(democracy$Country))) %&gt;% group_by(country) %&gt;% summarise(rate_suicide = mean(rate_suicide, na.rm = T)) %&gt;% arrange(country)
+
+democracy &lt;- democracy %&gt;% filter(Country %in% as.character(unique(democracy_compare_data$country))) %&gt;% arrange(Country)
+
+ggplot(data = democracy_compare_data, aes(democracy$Overall_score, rate_suicide)) + geom_point(size = 2, alpha = 0.75, colour = &quot;dark blue&quot;) + theme_bw() + geom_smooth(se = F) + xlab(&quot;Democracy score (overall)&quot;) + ylab(&quot;Suicide rate (per million people)&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-13-1.png" /><!-- --></p>
+<pre class="r"><code>cor.test(democracy$Overall_score, democracy_compare_data$rate_suicide, method = &quot;pearson&quot;)</code></pre>
+<pre><code>##
+##  Pearson&#39;s product-moment correlation
+##
+## data:  democracy$Overall_score and democracy_compare_data$rate_suicide
+## t = 2.833, df = 77, p-value = 0.005883
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.09240441 0.49473859
+## sample estimates:
+##       cor
+## 0.3072375</code></pre>
+<pre class="r"><code>cor.test(democracy$Overall_score, democracy_compare_data$rate_suicide, method = &quot;spearman&quot;)</code></pre>
+<pre><code>## Warning in cor.test.default(democracy$Overall_score,
+## democracy_compare_data$rate_suicide, : Cannot compute exact p-value with
+## ties</code></pre>
+<pre><code>##
+##  Spearman&#39;s rank correlation rho
+##
+## data:  democracy$Overall_score and democracy_compare_data$rate_suicide
+## S = 53016, p-value = 0.001339
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho
+## 0.3547168</code></pre>
+<p>There’s a <strong>weak</strong> (R = 0.307) but significant <strong>positive Pearson correlation between the Democracy Index and suicide rates</strong>. Gross domestic product based on purchasing-power-parity (PPP) <em>per capita</em> GDP values (2015) in international dollars were obtained from the <a href="https://www.imf.org/external/pubs/ft/weo/2016/02/weodata/weorept.aspx?sy=2015&amp;ey=2015&amp;ssd=1&amp;sort=country&amp;ds=.&amp;br=1&amp;pr1.x=16&amp;pr1.y=7&amp;c=512%2C668%2C914%2C672%2C612%2C946%2C614%2C137%2C311%2C962%2C213%2C674%2C911%2C676%2C193%2C548%2C122%2C556%2C912%2C678%2C313%2C181%2C419%2C867%2C513%2C682%2C316%2C684%2C913%2C273%2C124%2C868%2C339%2C921%2C638%2C948%2C514%2C943%2C218%2C686%2C963%2C688%2C616%2C518%2C223%2C728%2C516%2C558%2C918%2C138%2C748%2C196%2C618%2C278%2C522%2C692%2C622%2C694%2C156%2C142%2C624%2C449%2C626%2C564%2C628%2C565%2C228%2C283%2C924%2C853%2C233%2C288%2C632%2C293%2C636%2C566%2C634%2C964%2C238%2C182%2C662%2C453%2C960%2C968%2C423%2C922%2C935%2C714%2C128%2C862%2C611%2C135%2C321%2C716%2C243%2C456%2C248%2C722%2C469%2C942%2C253%2C718%2C642%2C724%2C643%2C576%2C939%2C936%2C644%2C961%2C819%2C813%2C172%2C199%2C132%2C733%2C646%2C184%2C648%2C524%2C915%2C361%2C134%2C362%2C652%2C364%2C174%2C732%2C328%2C366%2C258%2C734%2C656%2C144%2C654%2C146%2C336%2C463%2C263%2C528%2C268%2C923%2C532%2C738%2C944%2C578%2C176%2C537%2C534%2C742%2C536%2C866%2C429%2C369%2C433%2C744%2C178%2C186%2C436%2C925%2C136%2C869%2C343%2C746%2C158%2C926%2C439%2C466%2C916%2C112%2C664%2C111%2C826%2C298%2C542%2C927%2C967%2C846%2C443%2C299%2C917%2C582%2C544%2C474%2C941%2C754%2C446%2C698%2C666&amp;s=PPPPC&amp;grp=0&amp;a=">International Monetary Fund (IMF)</a>.</p>
+<pre class="r"><code>gdppc &lt;- read.csv(&quot;WEO_Data.xls&quot;, sep = &quot;\t&quot;)
+gdppc$X2015 &lt;- as.numeric(as.character(gdppc$X2015))</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre class="r"><code>gdp_compare_data &lt;- total_suicide_rate %&gt;% filter(year &gt;= 2012) %&gt;% filter(country %in% as.character(unique(gdppc$Country))) %&gt;% group_by(country) %&gt;% summarise(rate_suicide = mean(rate_suicide, na.rm = T)) %&gt;% arrange(country)
+
+gdppc &lt;- gdppc %&gt;% filter(Country %in% as.character(unique(gdp_compare_data$country))) %&gt;% arrange(Country)</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-15-1.png" /><!-- --><img src="/assets/who-suicide/figure-html/unnamed-chunk-15-2.png" /><!-- --></p>
+<p>As the GDP variable is heavily skewed, it’s better to visualize it using its log transform:</p>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-16-1.png" /><!-- --></p>
+<pre class="r"><code>cor.test(gdppc$X2015, gdp_compare_data$rate_suicide, method = &quot;spearman&quot;)</code></pre>
+<pre><code>##
+##  Spearman&#39;s rank correlation rho
+##
+## data:  gdppc$X2015 and gdp_compare_data$rate_suicide
+## S = 69440, p-value = 0.0983
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho
+## 0.1861228</code></pre>
+<p>There does not seem to exist an apparent association between suicide rates and <em>per capita</em> GDP income.</p>
+</div>
+<div id="gender-ratios" class="section level2">
+<h2>Gender Ratios</h2>
+<pre class="r"><code>female_rates &lt;- who_suicide_statistics %&gt;% filter(year &gt;= 2012) %&gt;% group_by(country, sex) %&gt;% summarise(rate_suicide = sum(suicides_no) * 1000000 / sum(population)) %&gt;% na.omit %&gt;% arrange(country) %&gt;% filter(sex == &quot;female&quot;)
+
+male_rates &lt;- who_suicide_statistics %&gt;% filter(year &gt;= 2012) %&gt;% group_by(country, sex) %&gt;% summarise(rate_suicide = sum(suicides_no) * 1000000 / sum(population)) %&gt;% na.omit %&gt;% arrange(country) %&gt;% filter(sex == &quot;male&quot;)
+
+gender_ratio &lt;- data.frame(country = female_rates$country, ratio = male_rates$rate_suicide / female_rates$rate_suicide) %&gt;% na.omit() %&gt;% filter(is.finite(ratio))
+
+hist(gender_ratio$ratio, main = NA, xlab = &quot;Gender Ratio&quot;)</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-18-1.png" /><!-- --></p>
+<pre class="r"><code>gender_ratio_gdp &lt;- gender_ratio %&gt;% filter(country %in% as.character(unique(gdppc$Country)))
+gdppc_gender &lt;- gdppc %&gt;% filter(Country %in% as.character(unique(gender_ratio_gdp$country)))
+#ggplot(data = gender_ratio_gdp, aes(log(gdppc_gender$X2015), ratio)) + geom_point(size = 2, alpha = 0.75, colour = &quot;dark blue&quot;) + theme_bw() + geom_smooth(se=F)
+
+cor.test(gender_ratio_gdp$ratio, gdppc_gender$X2015)</code></pre>
+<pre><code>##
+##  Pearson&#39;s product-moment correlation
+##
+## data:  gender_ratio_gdp$ratio and gdppc_gender$X2015
+## t = -1.9561, df = 70, p-value = 0.05444
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.436320564  0.004226725
+## sample estimates:
+##        cor
+## -0.2276648</code></pre>
+<pre class="r"><code>gender_ratio_dem &lt;- gender_ratio %&gt;% filter(country %in% as.character(unique(democracy$Country)))
+democracy_gender &lt;- democracy %&gt;% filter(Country %in% as.character(unique(gender_ratio_dem$country)))
+#ggplot(data = gender_ratio_dem, aes(democracy_gender$Overall_score, ratio)) + geom_point(size = 2, alpha = 0.75, colour = &quot;dark blue&quot;) + theme_bw() + geom_smooth(se=F)
+
+cor.test(gender_ratio_dem$ratio, democracy_gender$Overall_score)</code></pre>
+<pre><code>##
+##  Pearson&#39;s product-moment correlation
+##
+## data:  gender_ratio_dem$ratio and democracy_gender$Overall_score
+## t = -0.67245, df = 71, p-value = 0.5035
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.3040547  0.1533210
+## sample estimates:
+##         cor
+## -0.07955241</code></pre>
+<p>There does not seem to be any association between gender ratios and Democracy Index nor <em>per capita</em> GDP.</p>
+<p><strong>Top 10 countries with highest gender ratios (male-to-female) 2012-2016</strong></p>
+<pre class="r"><code>head(gender_ratio %&gt;% arrange(desc(ratio)), n = 20)</code></pre>
+<pre><code>##                country    ratio
+## 1              Bahrain 9.262603
+## 2               Poland 6.992961
+## 3          Saint Lucia 6.889143
+## 4           Seychelles 6.841246
+## 5             Slovakia 6.684513
+## 6               Panama 6.439133
+## 7             Mongolia 6.425235
+## 8          Puerto Rico 6.290557
+## 9           Costa Rica 6.000486
+## 10             Romania 5.962328
+## 11 Republic of Moldova 5.751732
+## 12              Belize 5.586587
+## 13              Latvia 5.480794
+## 14           Lithuania 5.463001
+## 15  Russian Federation 5.419557
+## 16              Cyprus 5.224378
+## 17             Reunion 5.115328
+## 18             Ukraine 5.011528
+## 19               Malta 4.980026
+## 20             Georgia 4.875833</code></pre>
+<p><strong>Top 10 countries with lowest positive gender ratios (male-to-female) 2012-2016</strong></p>
+<pre class="r"><code>head(gender_ratio %&gt;% filter(ratio &gt; 0) %&gt;% arrange(ratio), n = 20)</code></pre>
+<pre><code>##                         country    ratio
+## 1                        Kuwait 1.472849
+## 2                         Aruba 1.903816
+## 3                 Hong Kong SAR 1.915214
+## 4                    Uzbekistan 2.076370
+## 5                     Singapore 2.079089
+## 6         Iran (Islamic Rep of) 2.116816
+## 7                          Fiji 2.120162
+## 8                   Netherlands 2.211227
+## 9             Republic of Korea 2.304564
+## 10                       Norway 2.332093
+## 11                       Sweden 2.360817
+## 12                        Japan 2.424445
+## 13         Virgin Islands (USA) 2.484681
+## 14                     Paraguay 2.492538
+## 15                 Turkmenistan 2.578286
+## 16                   Luxembourg 2.584304
+## 17                      Belgium 2.614295
+## 18                    Guatemala 2.636253
+## 19 Saint Vincent and Grenadines 2.699769
+## 20                  New Zealand 2.759721</code></pre>
+</div>
+<div id="age" class="section level2">
+<h2>Age</h2>
+<p>Elderly suicide is an increasingly troublesome concern as the population grows older.</p>
+<pre class="r"><code>elderly_data &lt;- who_suicide_statistics %&gt;% filter(year &gt;= 2012) %&gt;% filter(age == &quot;55-74 years&quot; | age == &quot;75+ years&quot;) %&gt;% group_by(country) %&gt;% summarise(rate_suicide = sum(suicides_no) * 1000000 / sum(population)) %&gt;% na.omit %&gt;% arrange(desc(rate_suicide))</code></pre>
+<p><strong>Top 10 countries with highest elderly suicide rates (2012-2016)</strong></p>
+<pre class="r"><code>head(elderly_data, n = 10)</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##    country           rate_suicide
+##    &lt;fct&gt;                    &lt;dbl&gt;
+##  1 Republic of Korea         495.
+##  2 Lithuania                 392.
+##  3 Slovenia                  346.
+##  4 Hungary                   342.
+##  5 Guyana                    333.
+##  6 Suriname                  308.
+##  7 Serbia                    296.
+##  8 Croatia                   290.
+##  9 Cuba                      278.
+## 10 Uruguay                   262.</code></pre>
+<p>This, however, can be biased due to a higher overall <em>“suicidability”</em> in some countries. Thus, let’s calculate the percentage of total suicides that are elderly ones (55+ years).</p>
+<pre class="r"><code>total_elderly &lt;- who_suicide_statistics %&gt;% filter(year &gt;= 2012) %&gt;% filter(age == &quot;55-74 years&quot; | age == &quot;75+ years&quot;) %&gt;% group_by(country) %&gt;% summarise(total_suicide = sum(suicides_no)) %&gt;% na.omit
+
+total_2012_16 &lt;- total_suicide %&gt;% filter(year &gt;= 2012) %&gt;% group_by(country) %&gt;% summarise(total_suicide = sum(total_suicide, na.rm = T)) %&gt;% filter(country %in% as.character(unique(total_elderly$country)))
+
+elderly_proportion &lt;- data.frame(country = total_elderly$country, proportion = total_elderly$total_suicide / total_2012_16$total_suicide)
+
+elderly_proportion &lt;- elderly_proportion[is.finite(elderly_proportion$proportion), ]</code></pre>
+<p><strong>Top 10 countries with highest elderly suicide proportion (2012-2016)</strong></p>
+<pre class="r"><code>head(elderly_proportion %&gt;% arrange(desc(proportion)), n = 10)</code></pre>
+<pre><code>##                country proportion
+## 1  Antigua and Barbuda  1.0000000
+## 2               Serbia  0.6119500
+## 3             Portugal  0.5895522
+## 4             Bulgaria  0.5839448
+## 5              Croatia  0.5570321
+## 6              Hungary  0.5400160
+## 7              Germany  0.5384444
+## 8              Austria  0.5329861
+## 9             Slovenia  0.5318396
+## 10                Cuba  0.5177912</code></pre>
+</div>
+<div id="usa-and-brazil-a-case-study" class="section level2">
+<h2>USA and Brazil: a case-study</h2>
+<p>I’ve selected two countries for further analysis: <strong>Brazil and USA</strong>, both very big countries with reliable data.</p>
+<pre class="r"><code>BR_data &lt;- subset(who_suicide_statistics, country == &quot;Brazil&quot;)
+
+US_data &lt;- subset(who_suicide_statistics, country == &quot;United States of America&quot;)</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-26-1.png" /><!-- --><img src="/assets/who-suicide/figure-html/unnamed-chunk-26-2.png" /><!-- --></p>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-27-1.png" /><!-- --><img src="/assets/who-suicide/figure-html/unnamed-chunk-27-2.png" /><!-- --></p>
+<p>Gender differences can be calculated over time:</p>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-28-1.png" /><!-- --><img src="/assets/who-suicide/figure-html/unnamed-chunk-28-2.png" /><!-- --></p>
+<pre class="r"><code>sex_US_data &lt;- US_data %&gt;% group_by(year, sex) %&gt;% summarise(rate_suicide = sum(suicides_no) * 1000000 / sum(population)) %&gt;% na.omit
+
+sex_BR_data &lt;- BR_data %&gt;% group_by(year, sex) %&gt;% summarise(rate_suicide = sum(suicides_no) * 1000000 / sum(population)) %&gt;% na.omit
+
+US_data_sexratio &lt;- data.frame(year = subset(sex_US_data, sex == &quot;male&quot;)$year, ratio = subset(sex_US_data, sex == &quot;male&quot;)$rate_suicide / subset(sex_US_data, sex == &quot;female&quot;)$rate_suicide, country = &quot;US&quot;)
+
+BR_data_sexratio &lt;- data.frame(year = subset(sex_BR_data, sex == &quot;male&quot;)$year, ratio = subset(sex_BR_data, sex == &quot;male&quot;)$rate_suicide / subset(sex_BR_data, sex == &quot;female&quot;)$rate_suicide, country = &quot;BR&quot;)
+
+data_sexratio &lt;- rbind(US_data_sexratio, BR_data_sexratio)</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-30-1.png" /><!-- --></p>
+<p>In Brazil, <strong>suicide rates for men have been steadily increasing since the 1980s</strong>, while rates for women have stayed roughly the same. In the US, however, suicide rates for men increased during the 80s (not followed by an increase in women’s rates), decline in the 2000s and has been increasing since 2005-6. This increase is now followed by a similar (but smaller) one in women’s rates. Thus, the men-to-women ratio increased with time in Brazil and decreased only after 2000 in the US. In 2015, <strong>for each woman</strong> who tried suicide, <strong>4-4.5 men</strong> have tried in Brazil or in US.</p>
+<pre class="r"><code>age_data_usbr &lt;- who_suicide_statistics %&gt;% group_by(year, country, age) %&gt;% summarise(rate_suicide = sum(suicides_no) * 1000000 / sum(population)) %&gt;% na.omit</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-32-1.png" /><!-- --><img src="/assets/who-suicide/figure-html/unnamed-chunk-32-2.png" /><!-- --></p>
+<p>Both countries present highest suicide rates for the elderly. However, in both cases, <strong>the gap between adults (25-34 years) and elderly (55+ years) is getting narrower</strong> since the 2000s, which shows that adults are commiting proportionally more suicides when compared to the past (1990s).</p>
+<pre class="r"><code>age_gender_usbr &lt;- who_suicide_statistics %&gt;% group_by(sex, year, country, age) %&gt;% summarise(rate_suicide = sum(suicides_no) * 1000000 / sum(population)) %&gt;% na.omit</code></pre>
+<p><img src="/assets/who-suicide/figure-html/unnamed-chunk-34-1.png" /><!-- --><img src="/assets/who-suicide/figure-html/unnamed-chunk-34-2.png" /><!-- --></p>
+<p>Interestingly, the high elderly suicide rate is apparently accounted for by only male people. <strong>There’s practically no age gap among women</strong>. This suggests that elderly suicide is almost exclusively a male issue in these countries.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

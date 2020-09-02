@@ -3,11 +3,10 @@ title: "Twitter sentiment classification - Part 1"
 header:
   overlay_image: /assets/images/default_overlay.jpg
   show_overlay_excerpt: false
-  categories:
-    - Machine Learning
-  tags:
-    - Python
-    - Coding
+categories:
+  - Coding
+tags:
+  - Python
 ---
 
 Sentiment classification is somewhat of a trend in [NLP](https://en.wikipedia.org/wiki/Natural_language_processing); it consists of classifying small texts according to its sentiment connotation: a positive or negative feeling. Today we'll use the [Sentiment140 dataset](http://www.sentiment140.com) to train a classifier model in python. The dataset consists of 1.6 million sentiment-labeled tweets. The encoding must be manually set.

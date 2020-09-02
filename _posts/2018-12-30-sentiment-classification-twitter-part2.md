@@ -3,14 +3,11 @@ title: "Twitter sentiment classification - Part 2"
 header:
   overlay_image: /assets/images/default_overlay.jpg
   show_overlay_excerpt: false
-  categories:
-    - Machine Learning
-  tags:
-    - Python
-    - Coding
-    - Keras
-    - Neural Networks
-excerpt: We'll use Recurrent Neural Networks to classify the Sentiment140 dataset into positive or negative tweets.
+  excerpt: We'll use Recurrent Neural Networks to classify the Sentiment140 dataset into positive or negative tweets.
+categories:
+  - Coding
+tags:
+  - Python
 ---
 
 > This is the part 2 of a series, please read [part 1](http://hyperspaces.org/sentiment-classification-twitter-part1/) before reading this.

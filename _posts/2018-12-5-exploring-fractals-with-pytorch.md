@@ -3,12 +3,10 @@ title: "Exploring Fractals With Pytorch"
 header:
   overlay_image: /assets/images/fractal_overlay.jpg
   show_overlay_excerpt: false
-  categories:
-    - Coding
-  tags:
-    - Python
-    - Algorithm
-    - Coding
+categories:
+  - Coding
+tags:
+  - Python
 ---
 
 [FracLac](https://imagej.nih.gov/ij/plugins/fraclac/FLHelp/Introduction.htm) is a great package for fractal analysis in ImageJ. Unfortunately, no similar Python package is available. There are pieces of code that perform the box-counting algorithm.

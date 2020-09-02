@@ -7,8 +7,6 @@ header:
     - Coding
   tags:
     - Python
-    - Algorithm
-    - Coding
 ---
 Recently, I stumbled upon a very interesting [blog post](http://www.datagenetics.com/blog/december32011/) and a [Reddit thread](https://www.reddit.com/r/compsci/comments/2o044h/battleship_algorithms_this_is_awesome/) about an algorithm to play battleship in the best possible way. The blog post, however, does not explain how probabilities are calculated. So, I decided to give it a try and write my own code for this problem.
 

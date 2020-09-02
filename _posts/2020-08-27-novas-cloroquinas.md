@@ -3,7 +3,6 @@ title: "Por que novas cloroquinas virão"
 header:
   overlay_image: /assets/images/new_hcqs/drugs.jpg
   caption: "Photo by [Adrian Baciu](https://freeimages.com//photographer/a_dutzu-83304) from [FreeImages](https://freeimages.com/)"
-
   show_overlay_excerpt: false
 categories:
   - Blog

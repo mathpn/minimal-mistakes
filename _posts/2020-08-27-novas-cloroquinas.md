@@ -3,7 +3,7 @@ title: "Por que novas cloroquinas virão"
 header:
   overlay_image: /assets/images/new_hcqs/drugs.jpg
   caption: "Photo by [Adrian Baciu](https://freeimages.com//photographer/a_dutzu-83304) from [FreeImages](https://freeimages.com/)"
-  excerpt: 'Nós devemos focar em explicar por que terapias ineficazes podem parecer serem muito eficazes e mostrar os benefícios de ensaios clínicos de qualidade.'
+
   show_overlay_excerpt: false
 categories:
   - Blog
@@ -11,6 +11,7 @@ tags:
   - Pandemic
   - Science
   - Statistics
+excerpt: 'Nós devemos focar em explicar por que terapias ineficazes podem parecer serem muito eficazes e mostrar os benefícios de ensaios clínicos de qualidade.'
 ---
 _English version [here](https://mathpn.github.io/new-hcqs/)_
 

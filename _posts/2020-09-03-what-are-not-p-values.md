@@ -47,4 +47,4 @@ Let's assume we are a patient doing blood tests for a disease called _statistico
 | **+ test**   | 9,900   | 19,800   |
 | **- test**  | 100   | 970,200   |
 
-Here, H0 is that we're not sick, while H1 is that we are sick. The probability of _getting a positive result **given that we are not sick**_ is $P(+ | H0) = \frac{19800}{(970200 + 19800)}$ or 2%.
+Here, H0 is that we're not sick, while H1 is that we are sick. The probability of getting a positive result **given that we are not sick** is.

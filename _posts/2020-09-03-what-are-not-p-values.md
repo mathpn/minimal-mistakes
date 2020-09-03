@@ -8,10 +8,11 @@ categories:
 tags:
   - Statistics
 excerpt: "What exactly is a p-value? Let's define the p-value and then look at what it is not."
+toc: true
 
 ---
 
-Over the last 100 years, _p-values_ have become increasingly common in many scientific fields, after its development by Ronald Fisher in 1920. Now, on the 100th anniversary of the all-famous _p-value_, its use is being questioned due to irreproducible research, _p-hacking_ practices and various misunderstandings about its true meaning.
+Over the last 100 years, [_p-values_](https://en.wikipedia.org/wiki/P-value) have become increasingly common in many scientific fields, after its development by [Ronald Fisher](https://en.wikipedia.org/wiki/Ronald_Fisher) around 1920. Now, on the aproximate 100th anniversary of the all-famous _p-value_, its use is being questioned due to irreproducible research, [_p-hacking_ practices](https://en.wikipedia.org/wiki/Data_dredging) and various misunderstandings about its true meaning.
 
 Reporting only _p-values_ is becoming less acceptable, and for good reason. Scientists should also report full data distribution, confidence intervals and details about the statistical test used and its assumptions. Those who continue to report only that P < 0.05 will face more and more questions from journals and reviewers. All this is good for science and open science. Still, _p-values_ are very useful and will not disappear - at least not for now.
 
@@ -42,12 +43,9 @@ However, **we do not know P(H0)** since we assume H0 to be true. Let's use an ex
 
 Let's assume we are a patient doing blood tests for a disease called _statisticosis_. We know that, if you're ill, the test returns a positive result 99% of the time. Also, if you're not ill, it returns a negative result 98% of the time. 1% of the population is estimated to have statisticosis. Let's assume a population of 1 million people and build a table. First, there are 990,000 people (99% of the population) without the disease and 10,000 people (1%) with the disease. Of those that are ill, 9,900 (99% of the ill) will get a positive result at the test, while 9,900 people that are not ill will also get a positive result (2% of those who are not ill).
 
-|  | Ill | Not ill |
-|:--------|:-------:|--------:|
-| **+ test**   | 9,900   | 19,800   |
-| **- test**  | 100   | 970,200   |
+![Table](/assets/images/p_values_are_not/table1.png){: .align-right}
 
-Here, H0 is that we're not sick, while H1 is that we are sick. The probability of getting a positive result **given that we are not sick** is $P(+ \vert H0) = \frac{19800}{(970200 + 19800)} = 0.02$ or 2%. This is how we usually think about blood tests and its comparable to what _p-values_ estimate: we assume H0 (not sick) to be true and calculate the probability of an observation at least as extreme as the one observed (in this case, the probability of a positive result). This number tells us that, given that we're not sick, a positive result is unlikely (2%). However, the probability that one is not sick given a positive result is $P(H0 \vert +) = \frac{19800}{(19800 + 9900)} = \frac{2}{3}$ or **66%**! In other words, _if you were to receive a positive result, you would have a **33% probability of being ill (true positive)**_. It might seem like the test is useless in this case, but without the test, we can only know that our probability of being ill is 1% (population prevalence). This example, of course, ignores symptoms and other diagnostic tools for the sake of simplicity.
+Here, H0 is that we're not sick, while H1 is that we are sick. The probability of getting a positive result **given that we are not sick** is $P(+ \vert H0) = \frac{19800}{(970200 + 19800)} = 0.02$ or 2%. This is how we usually think about blood tests and its comparable to what _p-values_ estimate: we assume H0 (not sick) to be true and calculate the probability of an observation at least as extreme as the one observed (in this case, the probability of a positive result). This number tells us that, given that we're not sick, a positive result is unlikely (2%). However, the probability that one is not sick given a positive result is $P(H0 \vert +) = \frac{19800}{(19800 + 9900)} = \frac{2}{3}$ or **66%**! In other words, _if you were to receive a positive result, you would have a **66% probability of not being ill (false positive)** and a 33% probability of actually being ill (true positive)_. It might seem like the test is useless in this case, but without the test, we can only know that our probability of being ill is 1% (population prevalence). This example, of course, ignores symptoms and other diagnostic tools for the sake of simplicity.
 
 How can these two probabilities be so different? The thing here is the low prevalence of the disease. Even with a good test, there are many, _many_ more people without the disease (compared to people with the disease), so a lot of false positives will occur.
 
@@ -76,7 +74,7 @@ Many measures of [effect size](https://en.wikipedia.org/wiki/Effect_size) exist 
 
 An experiment with P = 0.00001 may have a [Cohen's d](https://en.wikipedia.org/wiki/Effect_size#Cohen's_d) of 0.05, while another with P = 0.002 may have d = 0.2. Using the common 5% threshold, both are statistically significant. However, as we've seen, smaller _p-values_ do not indicate the chance of error and, as we're seeing now, nor the effect size. The latter has a higher _p-value_, which could make us think the effect was smaller, but the effect size is greater compared to the former (d = 0.2 _vs_ d = 0.05).
 
-Effect sizes should be reported because, when the sample size is big or variability is low, very small chances may become statistically significant, but the effect size is so small that it might as well be biologically irrelevant. Confidence intervals can also be calculated for effect sizes, which is another great way of visualizing magnitude and its associated uncertainty.
+Effect sizes should be reported because, when the sample size is big or variability is low, very small changes may become statistically significant, but the effect size is so small that it might as well be biologically irrelevant. Confidence intervals can also be calculated for effect sizes, which is another great way of visualizing magnitude and its associated uncertainty.
 
 ## Conclusions
 
@@ -89,4 +87,4 @@ After a few examples of what a _p-value_ is **not**, let's remember what it is:
 
 Maybe this definition makes more intuitive sense now. The point here is that _p-values_ are very useful and will not go away soon. They should be used and are a valuable resource to make good statistical reasoning. However, they have a very strict definition and purpose, which is often misunderstood by those who apply them to their daily jobs.
 
-Understanding what _p-values_ indicate reminds us of the **importance of well-founded hypothesis generation, of multiple lines of evidence to confirm a result, of adequate sample sizes and, most of all, of _good reasoning and transparency_ when judging new hypothesis.**
+Understanding what _p-values_ indicate reminds us of the **importance of well-founded hypothesis generation, of multiple lines of evidence to confirm a result, of adequate sample sizes and, most of all, of _good reasoning and transparency_ when judging new hypotheses.**

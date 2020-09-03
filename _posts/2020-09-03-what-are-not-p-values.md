@@ -36,7 +36,7 @@ _P-values_ tell us the probability that the observed results **_would_ come up d
 
 ## 2) The probability that H1 is true
 This is a bit tricky to understand. H1 is the alternative hypothesis, in contrast to H0. Almost always, H1 states that the groups are different or that an estimator is different from zero.
-However, **_p-values_ tell us nothing about H1.** They tell us $P(observed\ difference | H0)$, or the probability of the observed difference _given that H0 is true_. Since H0 and H1 are complementary hypotheses, $P(H0) + P(H1) = 1$. Thus, $P(H1) = 1 - P(H0)$.
+However, **_p-values_ tell us nothing about H1.** They tell us $P(observed\ difference \vert H0)$, or the probability of the observed difference _given that H0 is true_. Since H0 and H1 are complementary hypotheses, $P(H0) + P(H1) = 1$. Thus, $P(H1) = 1 - P(H0)$.
 
 However, **we do not know P(H0)** since we assume H0 to be true. Let's use an example.
 
@@ -47,19 +47,16 @@ Let's assume we are a patient doing blood tests for a disease called _statistico
 | **+ test**   | 9,900   | 19,800   |
 | **- test**  | 100   | 970,200   |
 
-Here, H0 is that we're not sick, while H1 is that we are sick. The probability of getting a positive result **given that we are not sick** is $P(+ | H0) = \frac{19800}{(970200 + 19800)}
-= 0.02$ or 2%. This is how we usually think about blood tests and its comparable to what _p-values_ estimate: we assume H0 (not sick) to be true and calculate the probability of an observation at least as extreme as the one observed (in this case, the probability of a positive result). This number tells us that, given that we're not sick, a positive result is unlikely (2%). However, the probability that one is not sick given a positive result is $P(H0 | +) = \frac{19800}{(19800 + 9900)}
-= \frac{2}{3}$ or **66%**! In other words, _if you were to receive a positive result, you would have a **33% probability of being ill (true positive)**_. It might seem like the test is useless in this case, but without the test, we can only know that our probability of being ill is 1% (population prevalence). This example, of course, ignores symptoms and other diagnostic tools for the sake of simplicity.
+Here, H0 is that we're not sick, while H1 is that we are sick. The probability of getting a positive result **given that we are not sick** is $P(+ \vert H0) = \frac{19800}{(970200 + 19800)} = 0.02$ or 2%. This is how we usually think about blood tests and its comparable to what _p-values_ estimate: we assume H0 (not sick) to be true and calculate the probability of an observation at least as extreme as the one observed (in this case, the probability of a positive result). This number tells us that, given that we're not sick, a positive result is unlikely (2%). However, the probability that one is not sick given a positive result is $P(H0 \vert +) = \frac{19800}{(19800 + 9900)} = \frac{2}{3}$ or **66%**! In other words, _if you were to receive a positive result, you would have a **33% probability of being ill (true positive)**_. It might seem like the test is useless in this case, but without the test, we can only know that our probability of being ill is 1% (population prevalence). This example, of course, ignores symptoms and other diagnostic tools for the sake of simplicity.
 
 How can these two probabilities be so different? The thing here is the low prevalence of the disease. Even with a good test, there are many, _many_ more people without the disease (compared to people with the disease), so a lot of false positives will occur.
 
-The important thing here is to understand that
-$P(+ | H0)
-\neq P(H0 | +)$
+The important thing here is to understand that $P(+ \vert H0)
+\neq P(H0 \vert +)$
 and that these probabilities can be wildly different. This confusion is known as the [prosecutor fallacy](https://en.wikipedia.org/wiki/Prosecutor%27s_fallacy).
 
 _P-values_ are comparable to
-$P(+|H0)$. **We assume the null hypothesis, therefore we cannot calculate it's probability nor the probability of H1.** Therefore, _p-values_ tell us nothing about the probability of H0 nor of H1. There is no better estimate because we do not know the probability that H1 is true before (_a priori_) our observations are collected. If this notion of _a priori_ probabilities seems fuzzy, let's look at the next misconception.
+$P(+ \vert H0)$. **We assume the null hypothesis, therefore we cannot calculate it's probability nor the probability of H1.** Therefore, _p-values_ tell us nothing about the probability of H0 nor of H1. There is no better estimate because we do not know the probability that H1 is true before (_a priori_) our observations are collected. If this notion of _a priori_ probabilities seems fuzzy, let's look at the next misconception.
 
 ## 3) Chance of error
 

@@ -8,8 +8,6 @@ categories:
 tags:
   - Statistics
 excerpt: "What exactly is a p-value? Let's define the p-value and then look at what it is not."
-toc: true
-
 ---
 
 Over the last 100 years, [_p-values_](https://en.wikipedia.org/wiki/P-value) have become increasingly common in many scientific fields, after its development by [Ronald Fisher](https://en.wikipedia.org/wiki/Ronald_Fisher) around 1920. Now, on the aproximate 100th anniversary of the all-famous _p-value_, its use is being questioned due to irreproducible research, [_p-hacking_ practices](https://en.wikipedia.org/wiki/Data_dredging) and various misunderstandings about its true meaning.

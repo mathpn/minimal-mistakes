@@ -7,7 +7,7 @@ categories:
   - Blog
 tags:
   - Statistics
-excerpt: 'What exactly is a p-value? Many scientists have never thought about this question explicitly. So, let's define the p-value and then look at what it is not.'
+excerpt: "What exactly is a p-value? Let's define the p-value and then look at what it is not."
 
 ---
 

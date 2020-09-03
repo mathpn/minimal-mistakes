@@ -70,7 +70,7 @@ naver_site_verification  :
 
 # Social Sharing
 twitter:
-  username               : "@pnmath"
+  username               : "pnmath"
 facebook:
   username               :
   app_id                 :
@@ -116,6 +116,9 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/mathpn/"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/matheus-pedroni-ba107b147/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"

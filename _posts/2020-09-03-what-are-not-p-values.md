@@ -1,5 +1,5 @@
 ---
-title: "What are **NOT** _p-values?_"
+title: "What are NOT p-values?"
 header:
   overlay_image: /assets/images/default_overlay.jpg
   show_overlay_excerpt: false

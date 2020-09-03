@@ -53,8 +53,10 @@ Here, H0 is that we're not sick, while H1 is that we are sick. The probability o
 
 How can these two probabilities be so different? The thing here is the low prevalence of the disease. Even with a good test, there are many, _many_ more people without the disease (compared to people with the disease), so a lot of false positives will occur.
 
-The important thing here is to understand that $P(+ | H0)
-\neq P(H0 | +)$ and that these probabilities can be wildly different. This confusion is known as the [prosecutor fallacy](https://en.wikipedia.org/wiki/Prosecutor%27s_fallacy).
+The important thing here is to understand that
+$P(+ | H0)
+\neq P(H0 | +)$
+and that these probabilities can be wildly different. This confusion is known as the [prosecutor fallacy](https://en.wikipedia.org/wiki/Prosecutor%27s_fallacy).
 
 _P-values_ are comparable to
 $P(+|H0)$. **We assume the null hypothesis, therefore we cannot calculate it's probability nor the probability of H1.** Therefore, _p-values_ tell us nothing about the probability of H0 nor of H1. There is no better estimate because we do not know the probability that H1 is true before (_a priori_) our observations are collected. If this notion of _a priori_ probabilities seems fuzzy, let's look at the next misconception.

@@ -18,9 +18,9 @@ No entanto, um foco excessivo foi dado à tal eficácia. Tomamos vacinas há mui
 
 Afinal de contas, o que é a _eficácia de uma vacina_? Vamos aqui definir a _eficácia_ e olhar o que ela **não é**. Definir o não é a eficácia é uma boa forma de remover interpretações equivocadas que já estão nas nossas mentes.
 
-A eficácia de uma vacina (EV) é definida como:
+A eficácia de uma vacina (Efi) é definida como:
 
-$EV = 1 - RR$
+$Efi = 1 - RR$
 
 Sendo RR o **Risco Relativo** entre os grupos que tomaram vacina ou placebo nos **testes de fase III**:
 
@@ -34,7 +34,7 @@ $Risco\ grupo\ placebo = \frac{340}{1000} = 0,34$
 
 A eficácia da vacina portanto é:
 
-$EV = 1 - \frac{0,079}{0,34} = 1 - 0,232 = 0,768$
+$Efi = 1 - \frac{0,079}{0,34} = 1 - 0,232 = 0,768$
 
 Ou seja, a eficácia dessa vacina fictícia é de 76,8%. O que isso **não** significa?
 

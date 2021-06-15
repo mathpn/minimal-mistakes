@@ -1,7 +1,8 @@
 ---
 title: "O que NÃO É a eficácia de uma vacina"
 header:
-  overlay_image: /assets/images/default_overlay.jpg
+  overlay_image: /assets/images/vaccine.jpg
+  caption: "Photo by [Daniel Schludi](https://unsplash.com/@schluditsch?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/vaccine?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)"
   show_overlay_excerpt: false
 categories:
   - Blog
@@ -18,14 +19,21 @@ No entanto, um foco excessivo foi dado à tal eficácia. Tomamos vacinas há mui
 Afinal de contas, o que é a _eficácia de uma vacina_? Vamos aqui definir a _eficácia_ e olhar o que ela **não é**. Definir o não é a eficácia é uma boa forma de remover interpretações equivocadas que já estão nas nossas mentes.
 
 A eficácia de uma vacina (EV) é definida como:
+
 $EV = 1 - RR$
+
 Sendo RR o **Risco Relativo** entre os grupos que tomaram vacina ou placebo nos **testes de fase III**:
+
 $RR = \frac{Risco\ grupo\ vacinado}{Risco\ grupo\ placebo}$
 
 Assim, se ao final de um estudo com 1000 pessoas em cada grupo há 340 infectados no grupo placebo e 79 no grupo vacinado, temos:
+
 $Risco\ grupo\ vacinado = \frac{79}{1000} = 0,079$
+
 $Risco\ grupo\ placebo = \frac{340}{1000} = 0,34$
+
 A eficácia da vacina portanto é:
+
 $EV = 1 - \frac{0,079}{0,34} = 1 - 0,232 = 0,768$
 
 Ou seja, a eficácia dessa vacina fictícia é de 76,8%. O que isso **não** significa?
@@ -69,12 +77,14 @@ A alta eficácia contra casos graves deve aliviar os hospitais mesmo diante de u
 
 Vamos relembrar a definição da eficácia de uma vacina:
 
-$EV = 1 - RR$
+$Efi = 1 - RR$
+
 Sendo RR o Risco Relativo entre os grupos que tomaram vacina ou placebo nos testes de fase III:
+
 $RR = \frac{Risco\ grupo\ vacinado}{Risco\ grupo\ placebo}$
 
 A eficácia é a redução **relativa do risco** que pessoas vacinadas apresentam na _média_ em relação a um grupo não vacinado nos estudos. Assim, _todos os vacinados estão protegidos em alguma medida_, o que não quer dizer que não é possível ficar doente. Como essa redução é _relativa_, sua chance de se infectar estando vacinado depende diretamente do número de pessoas infectadas na sua região no momento. Soma-se a isso o fato de as pessoas _mudarem seu comportamento_ após tomar uma vacina: por se sentirem mais protegidas, elas acabam se permitindo correr mais risco. Isso é razoável, mas pode contribuir para um aumento dos novos casos enquanto uma minoria está vacinada.
 
 Se o _número de casos subir_ consideravelmente após uma pessoa se vacinar, é possível que ela tenha um _risco similar de ficar doente_ ao que tinha antes de se vacinar. Isso não é pessimismo vão: as vacinas foram capazes de eliminar doenças altamente contagiosas de muitos países (sarampo e rubéola, por exemplo) e até de extinguir a varíola do mundo. A vacina da gripe apresenta uma eficácia de 40-60% e mesmo assim é perfeitamente capaz de evitar surtos epidêmicos e muitas mortes pela doença. Com a vacinação de **grande parte da população**, como quase todos os vacinados apresentam algum nível de proteção, o vírus tem bem mais dificuldade de contaminar outras pessoas e o **número de novos casos tende a cair até próximo de 0**. Portanto, as **vacinas funcionam de fato a nível coletivo**.
 
-Tudo isso mostra a importância de **vacinarmos a grande maioria da população o mais rápido possível**. A eficácia contra Covid-19 de uma vacina na geladeira (ou de não tomar vacina) é sempre 0. Logo o foco deve ser **aumentar a chegada de novas doses** e, ao mesmo tempo, **usar todas as doses** em estoque. O Brasil sofre com problemas nas duas frentes: de um lado, [negamos acordos de compras](https://www1.folha.uol.com.br/poder/2021/05/governo-ignorou-10-emails-da-pfizer-sobre-vacinas-em-1-mes-mostram-documentos-da-cpi.shtml) e recebemos doses de [forma atrasada](https://www1.folha.uol.com.br/equilibrioesaude/2021/06/apos-ignorar-emails-da-pfizer-bolsonaro-agora-pede-antecipacao-da-entrega-de-doses.shtml); de outro, por motivos diversos, apenas os estados de Sâo Paulo e Mato Grosso do Sul usaram [mais de 80% das doses recebidas até 15/06/2021](https://especiais.g1.globo.com/bemestar/vacina/2021/mapa-brasil-vacina-covid/). A cada dia que doses passam na geladeira ou sequer foram compradas, _2000 brasileiros_ morrem de Covid-19. A nível individual, é um grande alívio receber uma vacina e estar mais protegido. Mas, como agora você sabe, **a proteção dos vacinados também depende do controle do número de casos da doença, o qual virá conforme o número de vacinados aumentar.**
+Tudo isso mostra a importância de **vacinarmos a grande maioria da população o mais rápido possível**. A eficácia contra Covid-19 de uma vacina na geladeira (ou de não tomar vacina) é sempre 0. Logo o foco deve ser **aumentar a chegada de novas doses** e, ao mesmo tempo, **usar todas as doses** em estoque. O Brasil sofre com problemas nas duas frentes: de um lado, [negamos acordos de compras](https://www1.folha.uol.com.br/poder/2021/05/governo-ignorou-10-emails-da-pfizer-sobre-vacinas-em-1-mes-mostram-documentos-da-cpi.shtml) e recebemos doses de [forma atrasada](https://www1.folha.uol.com.br/equilibrioesaude/2021/06/apos-ignorar-emails-da-pfizer-bolsonaro-agora-pede-antecipacao-da-entrega-de-doses.shtml); de outro, por motivos diversos, apenas os estados de Sâo Paulo e Mato Grosso do Sul usaram [mais de 80% das doses recebidas até 15/06/2021](https://especiais.g1.globo.com/bemestar/vacina/2021/mapa-brasil-vacina-covid/). A cada dia que doses passam na geladeira - ou sequer foram compradas - _2000 brasileiros_ morrem de Covid-19. A nível individual, é um grande alívio receber uma vacina e estar mais protegido. Mas, como agora você sabe, **a proteção dos vacinados também depende do controle do número de casos da doença, o qual virá conforme o número de vacinados aumentar.**
